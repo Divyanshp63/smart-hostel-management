@@ -8,7 +8,7 @@
 --   Complaint Staff:    complaint@smarthostel.com  / Complaint@123
 -- =============================================================================
 
-USE hostel_db;
+-- USE hostel_db;
 
 -- 1. Insert Initial Rooms
 INSERT INTO rooms (id, room_number, block_name, floor, capacity, occupied, room_type, rent_per_month, status, description) VALUES
