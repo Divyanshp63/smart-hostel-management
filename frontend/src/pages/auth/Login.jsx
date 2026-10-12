@@ -145,23 +145,34 @@ const Login = () => {
               <button
                 type="button"
                 className="btn btn-sm btn-outline-dark"
-                onClick={() => handleQuickLogin('admin@hostel.com', 'Admin@123')}
+                onClick={() => handleQuickLogin('vipin@gmail.com', 'vipin123')}
+                title="Warden"
               >
-                Admin
+                Warden (Vipin)
               </button>
               <button
                 type="button"
                 className="btn btn-sm btn-outline-dark"
-                onClick={() => handleQuickLogin('accountant@hostel.com', 'Accountant@123')}
+                onClick={() => handleQuickLogin('ram@gmail.com', 'ram123')}
+                title="Accountant"
               >
-                Accountant
+                Accountant (Ram)
               </button>
               <button
                 type="button"
                 className="btn btn-sm btn-outline-primary"
-                onClick={() => handleQuickLogin('aarav.patel@hostel.com', 'Student@123')}
+                onClick={() => handleQuickLogin('amit@gmail.com', 'amit123')}
+                title="Student"
               >
-                <i className="bi bi-person-fill me-1"></i> Student
+                <i className="bi bi-person-fill me-1"></i> Student (Amit)
+              </button>
+              <button
+                type="button"
+                className="btn btn-sm btn-outline-secondary"
+                onClick={() => handleQuickLogin('hakim@gmail.com', 'hakim123')}
+                title="Maintenance"
+              >
+                Maintenance (Hakim)
               </button>
             </div>
           </div>

@@ -59,6 +59,27 @@
                 </button>
             </form>
 
+            <!-- Quick Demo Credentials Box -->
+            <div class="p-3 bg-light rounded-3 border mb-3">
+                <div class="small fw-bold text-dark mb-2">
+                    <i class="bi bi-lightning-charge-fill text-warning me-1"></i> Default Quick Logins:
+                </div>
+                <div class="d-flex gap-2 flex-wrap">
+                    <button type="button" class="btn btn-sm btn-outline-dark" onclick="fillLogin('vipin@gmail.com', 'vipin123')">
+                        Warden (Vipin)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-dark" onclick="fillLogin('ram@gmail.com', 'ram123')">
+                        Accountant (Ram)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="fillLogin('amit@gmail.com', 'amit123')">
+                        <i class="bi bi-person-fill me-1"></i> Student (Amit)
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-secondary" onclick="fillLogin('hakim@gmail.com', 'hakim123')">
+                        Maintenance (Hakim)
+                    </button>
+                </div>
+            </div>
+
             <!-- Registration Link -->
             <div class="text-center mt-3 pt-3 border-top">
                 <span class="text-muted small">Don't have an account? </span>
@@ -70,5 +91,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script th:src="@{/js/theme.js}"></script>
+<script>
+function fillLogin(email, password) {
+    document.getElementById('email').value = email;
+    document.getElementById('password').value = password;
+}
+</script>
 </body>
 </html>

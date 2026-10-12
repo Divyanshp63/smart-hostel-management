@@ -98,12 +98,12 @@ Adv Java Project/
 
 | Role | Email Address | Password | Permitted Features |
 | :--- | :--- | :--- | :--- |
-| **ADMIN** | `admin@hostel.com` | `Admin@123` | Full access: Rooms, Allocations, Bulk Billing, Notices, Mess Menu, Reports |
-| **ACCOUNTANT** | `accountant@hostel.com` | `Accountant@123` | Financial Ledger, Fee Verification, Collection Reports, Dashboard |
-| **STUDENT** | `rahul@hostel.com` | `Student@123` | My Room, Online Fee Payment, Lodge Complaints, Leave Passes, Mess Menu |
-| **STUDENT** | `priya@hostel.com` | `Student@123` | My Room, Fee Invoices, Visitor Requests, Dining Timetable |
+| **WARDEN** | `vipin@gmail.com` | `vipin123` | Full access: Rooms, Allocations, Notices, Mess Menu, Reports |
+| **ACCOUNTANT** | `ram@gmail.com` | `ram123` | Financial Ledger, Fee Verification, Collection Reports, Dashboard |
+| **STUDENT** | `amit@gmail.com` | `amit123` | My Room, Online Fee Payment, Lodge Complaints, Leave Passes, Mess Menu |
+| **MAINTENANCE** | `hakim@gmail.com` | `hakim123` | Assigned Complaints, Work Status Updates, Maintenance Logs |
 
-*(Tip: On the frontend Login page, click the **"Quick Demo Fill"** button to auto-fill Admin or Accountant credentials in 1 click!)*
+*(Tip: On the frontend and backend Login pages, click the **"Quick Demo Fill"** button to auto-fill these credentials in 1 click!)*
 
 ---
 

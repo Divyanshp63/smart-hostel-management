@@ -32,10 +32,7 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         cleanOldAdmin();
         seedRooms();
-        seedWardenUser();
-        seedAccountantUser();
-        seedComplaintStaffUser();
-        seedStudentUser();
+        seedAllUsers();
         seedDefaultMessMenu();
     }
 
@@ -100,75 +97,84 @@ public class DataInitializer implements CommandLineRunner {
         }
     }
 
-    private void seedWardenUser() {
-        String wardenEmail = "warden@smarthostel.com";
+    private void seedAllUsers() {
+        // 1. Primary Default Users requested by user
+        seedWardenUser("vipin@gmail.com", "vipin123", "Vipin", "WRD-VIPIN-01", "9876543210");
+        seedAccountantUser("ram@gmail.com", "ram123", "Ram", "ACC-RAM-01", "9876543211");
+        seedComplaintStaffUser("hakim@gmail.com", "hakim123", "Hakim", "CMP-HAKIM-01", "9876543215");
+        seedStudentUser("amit@gmail.com", "amit123", "Amit", "STU-AMIT-001", "9876543212", "A-102", "Bed 1");
+
+        // 2. Standard system accounts (retained for backward compatibility and automated tests)
+        seedWardenUser("warden@smarthostel.com", "Warden@123", "Chief Warden", "WRD-001", "9876543220");
+        seedAccountantUser("accountant@smarthostel.com", "Accountant@123", "Hostel Accountant", "ACC-001", "9876543221");
+        seedComplaintStaffUser("complaint@smarthostel.com", "Complaint@123", "Maintenance Staff", "CMP-001", "9876543225");
+        seedStudentUser("student@smarthostel.com", "Student@123", "Student Resident", "STU-2026-001", "9876543222", "A-101", "Bed 1");
+    }
+
+    private void seedWardenUser(String wardenEmail, String rawPassword, String name, String empId, String phone) {
         User warden = userRepository.findByEmail(wardenEmail).orElseGet(() -> User.builder()
-                .name("Chief Warden")
+                .name(name)
                 .email(wardenEmail)
-                .phone("9876543210")
+                .phone(phone)
                 .role(Role.WARDEN)
                 .build());
-        warden.setPassword(passwordEncoder.encode("Warden@123"));
+        warden.setPassword(passwordEncoder.encode(rawPassword));
         warden.setRole(Role.WARDEN);
-        warden.setName("Chief Warden");
+        warden.setName(name);
         warden.setEnabled(true);
-        warden = userRepository.save(warden);
+        final User savedWarden = userRepository.save(warden);
 
-        if (!staffRepository.existsByUser(warden)) {
-            Staff staff = Staff.builder()
-                    .user(warden)
-                    .employeeId("WRD-001")
-                    .designation("Hostel Warden")
-                    .hostelAssignment("Main Hostel Campus")
-                    .build();
-            staffRepository.save(staff);
-        }
+        Staff staff = staffRepository.findByUser(savedWarden).orElseGet(() -> Staff.builder()
+                .user(savedWarden)
+                .build());
+        staff.setEmployeeId(empId);
+        staff.setDesignation("Hostel Warden");
+        staff.setHostelAssignment("Main Hostel Campus");
+        staffRepository.save(staff);
+
         log.info("Warden account verified: {}", wardenEmail);
     }
 
-    private void seedAccountantUser() {
-        String accountantEmail = "accountant@smarthostel.com";
+    private void seedAccountantUser(String accountantEmail, String rawPassword, String name, String empId, String phone) {
         User accountant = userRepository.findByEmail(accountantEmail).orElseGet(() -> User.builder()
-                .name("Hostel Accountant")
+                .name(name)
                 .email(accountantEmail)
-                .phone("9876543211")
+                .phone(phone)
                 .role(Role.ACCOUNTANT)
                 .build());
-        accountant.setPassword(passwordEncoder.encode("Accountant@123"));
+        accountant.setPassword(passwordEncoder.encode(rawPassword));
         accountant.setRole(Role.ACCOUNTANT);
-        accountant.setName("Hostel Accountant");
+        accountant.setName(name);
         accountant.setEnabled(true);
-        accountant = userRepository.save(accountant);
+        final User savedAccountant = userRepository.save(accountant);
 
-        if (!staffRepository.existsByUser(accountant)) {
-            Staff staff = Staff.builder()
-                    .user(accountant)
-                    .employeeId("ACC-001")
-                    .designation("Chief Accountant")
-                    .build();
-            staffRepository.save(staff);
-        }
+        Staff staff = staffRepository.findByUser(savedAccountant).orElseGet(() -> Staff.builder()
+                .user(savedAccountant)
+                .build());
+        staff.setEmployeeId(empId);
+        staff.setDesignation("Chief Accountant");
+        staffRepository.save(staff);
+
         log.info("Accountant account verified: {}", accountantEmail);
     }
 
-    private void seedComplaintStaffUser() {
-        String complaintEmail = "complaint@smarthostel.com";
+    private void seedComplaintStaffUser(String complaintEmail, String rawPassword, String name, String empId, String phone) {
         User staffUser = userRepository.findByEmail(complaintEmail).orElseGet(() -> User.builder()
-                .name("Maintenance Staff")
+                .name(name)
                 .email(complaintEmail)
-                .phone("9876543215")
+                .phone(phone)
                 .role(Role.COMPLAINT_STAFF)
                 .build());
-        staffUser.setPassword(passwordEncoder.encode("Complaint@123"));
+        staffUser.setPassword(passwordEncoder.encode(rawPassword));
         staffUser.setRole(Role.COMPLAINT_STAFF);
-        staffUser.setName("Maintenance Staff");
+        staffUser.setName(name);
         staffUser.setEnabled(true);
         final User savedStaffUser = userRepository.save(staffUser);
 
         Staff staff = staffRepository.findByUser(savedStaffUser).orElseGet(() -> Staff.builder()
                 .user(savedStaffUser)
                 .build());
-        staff.setEmployeeId("CMP-001");
+        staff.setEmployeeId(empId);
         staff.setDepartment(ComplaintCategory.MAINTENANCE);
         staff.setDesignation("Maintenance Lead / Technician");
         staffRepository.save(staff);
@@ -176,23 +182,22 @@ public class DataInitializer implements CommandLineRunner {
         log.info("Complaint / Maintenance Staff account verified: {}", complaintEmail);
     }
 
-    private void seedStudentUser() {
-        String studentEmail = "student@smarthostel.com";
+    private void seedStudentUser(String studentEmail, String rawPassword, String name, String admissionNo, String phone, String roomNumber, String bedNumber) {
         User studentUser = userRepository.findByEmail(studentEmail).orElseGet(() -> User.builder()
-                .name("Student Resident")
+                .name(name)
                 .email(studentEmail)
-                .phone("9876543212")
+                .phone(phone)
                 .role(Role.STUDENT)
                 .build());
-        studentUser.setPassword(passwordEncoder.encode("Student@123"));
+        studentUser.setPassword(passwordEncoder.encode(rawPassword));
         studentUser.setRole(Role.STUDENT);
-        studentUser.setName("Student Resident");
+        studentUser.setName(name);
         studentUser.setEnabled(true);
         final User savedStudentUser = userRepository.save(studentUser);
 
         Student student = studentRepository.findByUser(savedStudentUser).orElseGet(() -> Student.builder()
                 .user(savedStudentUser)
-                .admissionNumber("STU-2026-001")
+                .admissionNumber(admissionNo)
                 .college("Apex Engineering Institute")
                 .course("B.Tech Computer Science")
                 .yearOfStudy("3")
@@ -203,25 +208,28 @@ public class DataInitializer implements CommandLineRunner {
                 .emergencyContact("9876500001")
                 .address("104 Park Avenue, City Center")
                 .build());
+        student.setAdmissionNumber(admissionNo);
         student = studentRepository.save(student);
 
         // Ensure student has room allocation
-        Room room = roomRepository.findByRoomNumber("A-101").orElse(null);
-        if (room != null && !roomAllocationRepository.existsByStudentIdAndStatus(student.getId(), AllocationStatus.ACTIVE)) {
-            RoomAllocation allocation = RoomAllocation.builder()
-                    .student(student)
-                    .room(room)
-                    .bedNumber("Bed 1")
-                    .status(AllocationStatus.ACTIVE)
-                    .requestDate(LocalDate.now())
-                    .startDate(LocalDate.now())
-                    .remarks("Initial resident allocation")
-                    .build();
-            roomAllocationRepository.save(allocation);
+        if (roomNumber != null) {
+            Room room = roomRepository.findByRoomNumber(roomNumber).orElse(null);
+            if (room != null && !roomAllocationRepository.existsByStudentIdAndStatus(student.getId(), AllocationStatus.ACTIVE)) {
+                RoomAllocation allocation = RoomAllocation.builder()
+                        .student(student)
+                        .room(room)
+                        .bedNumber(bedNumber != null ? bedNumber : "Bed 1")
+                        .status(AllocationStatus.ACTIVE)
+                        .requestDate(LocalDate.now())
+                        .startDate(LocalDate.now())
+                        .remarks("Initial resident allocation")
+                        .build();
+                roomAllocationRepository.save(allocation);
 
-            room.setOccupied(1);
-            room.updateStatusBasedOnOccupancy();
-            roomRepository.save(room);
+                room.setOccupied(room.getOccupied() + 1);
+                room.updateStatusBasedOnOccupancy();
+                roomRepository.save(room);
+            }
         }
         log.info("Student account verified: {}", studentEmail);
     }

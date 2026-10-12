@@ -1,7 +1,13 @@
 -- =============================================================================
 -- Smart PG & Hostel Management System
--- Test Accounts and Initial Setup Seed Script
--- Role-based test credentials:
+-- Default Accounts and Seed Script
+-- Default credentials:
+--   Warden:             vipin@gmail.com            / vipin123
+--   Accountant:         ram@gmail.com              / ram123
+--   Student:            amit@gmail.com             / amit123
+--   Maintenance:        hakim@gmail.com            / hakim123
+--
+-- Backup / System Test credentials:
 --   Warden:             warden@smarthostel.com     / Warden@123
 --   Accountant:         accountant@smarthostel.com / Accountant@123
 --   Student:            student@smarthostel.com    / Student@123
