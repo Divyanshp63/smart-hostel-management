@@ -102,7 +102,6 @@ Adv Java Project/
 | **ACCOUNTANT** | `ram@gmail.com` | `ram123` | Financial Ledger, Fee Verification, Collection Reports, Dashboard |
 | **STUDENT** | `amit@gmail.com` | `amit123` | My Room, Online Fee Payment, Lodge Complaints, Leave Passes, Mess Menu |
 | **MAINTENANCE** | `hakim@gmail.com` | `hakim123` | Assigned Complaints, Work Status Updates, Maintenance Logs |
-
 *(Tip: On the frontend and backend Login pages, click the **"Quick Demo Fill"** button to auto-fill these credentials in 1 click!)*
 
 ---
