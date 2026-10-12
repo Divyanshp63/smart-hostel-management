@@ -13,6 +13,8 @@ https://docs.google.com/presentation/d/1iBLxBQINHmlURslvCkWwOFE0R-IFbX9d/edit?us
 Live Link :- 
 https://smart-hostel-management-9j3u.onrender.com/login
 
+Video link :- https://drive.google.com/file/d/19gsgNWibVJj9h48ASRTg8JyGHIEBpU0c/view?usp=drive_link
+
 
 ## 📌 Executive Summary
 Managing modern student residences, hostels, and paying-guest (PG) facilities requires reliable coordination between room allocations, dynamic bed occupancy tracking, recurring fee invoicing, online payments reconciliation, daily mess dining timetables, maintenance tickets, visitor passes, and night curfew leave permissions.
